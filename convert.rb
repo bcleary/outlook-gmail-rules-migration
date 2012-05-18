@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'fastercsv'
+require 'csv'
 
 # rule data is formatted in a "email, email box path" format
-rule_data = FasterCSV.table("sample_rules.csv", :force_quotes => true)
+rule_data = CSV.table("rules.csv", :force_quotes => true)
 
 # example gmail rules:
 # <entry>

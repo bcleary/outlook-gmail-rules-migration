@@ -5,7 +5,7 @@ Sub GetAllRules()
     Dim count As Integer
     Dim ruleList As String
 
-    Set st = Application.Session.DefaultStore
+    Set st = Application.Session.Stores.Item("INSERT_ACCOUNT_NAME_HERE")
 
     ' get rules
     Set myRules = st.GetRules
@@ -18,16 +18,16 @@ Sub GetAllRules()
             Dim adType
             adType = rl.Conditions.From.Recipients.Item(1).AddressEntry.AddressEntryUserType
             If adType = olExchangeRemoteUserAddressEntry Or adType = olExchangeUserAddressEntry Then
-	            Dim exUserr
-	            exUserr = rl.Conditions.From.Recipients.Item(1).AddressEntry.GetExchangeUser.PrimarySmtpAddress
-	            ruleList = ruleList & exUserr & ","
-	            'ruleList = ruleList & rl.Conditions.From.Recipients.Item(1).AddressEntry.Name
-	            '.GetExchangeUser
-	            'ruleList = ruleList & "," & exUser.PrimarySmtpAddress
-	            'Dim FromEmail As String = exUser.PrimarySmtpAddress
-	            'MessageBox.Show(ìFROM:  î & FromEmail)
+                    Dim exUserr
+                    exUserr = rl.Conditions.From.Recipients.Item(1).AddressEntry.GetExchangeUser.PrimarySmtpAddress
+                    ruleList = ruleList & exUserr & ","
+                    'ruleList = ruleList & rl.Conditions.From.Recipients.Item(1).AddressEntry.Name
+                    '.GetExchangeUser
+                    'ruleList = ruleList & "," & exUser.PrimarySmtpAddress
+                    'Dim FromEmail As String = exUser.PrimarySmtpAddress
+                    'MessageBox.Show(ìFROM:  î & FromEmail)
             ElseIf adType = olSmtpAddressEntry Then
-				ruleList = ruleList & rl.Conditions.From.Recipients.Item(1).AddressEntry.Address & ","
+                                ruleList = ruleList & rl.Conditions.From.Recipients.Item(1).AddressEntry.Address & ","
             End If
         ElseIf rl.Conditions.SentTo.Enabled Then
             ' CONDITION: TO EMAIL
@@ -65,17 +65,17 @@ Sub GetAllRules()
     ' tell the user what you did
     'ruleList = "These rules were executed against the Inbox: " & vbCrLf & ruleList
     'MsgBox ruleList, vbInformation, "Macro: RunAllInboxRules"
-    MsgBox ruleList
+    'MsgBox ruleList
     Set rl = Nothing
     Set st = Nothing
     Set myRules = Nothing
 
-	'Write information to Text File
-	Dim Stuff, myFSO, WriteStuff
-	Set myFSO = CreateObject("Scripting.FileSystemObject")
-	Set WriteStuff = myFSO.OpenTextFile("c:\rules.csv", 8, True)
-	WriteStuff.WriteLine (ruleList)
-	WriteStuff.Close
-	Set WriteStuff = Nothing
-	Set myFSO = Nothing
+        'Write information to Text File
+        Dim Stuff, myFSO, WriteStuff
+        Set myFSO = CreateObject("Scripting.FileSystemObject")
+        Set WriteStuff = myFSO.OpenTextFile("c:\rules.csv", 8, True)
+        WriteStuff.WriteLine (ruleList)
+        WriteStuff.Close
+        Set WriteStuff = Nothing
+        Set myFSO = Nothing
 End Sub
